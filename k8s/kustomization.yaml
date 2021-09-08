@@ -1,0 +1,13 @@
+# https://kubernetes-sigs.github.io/kustomize/api-reference/kustomization/
+
+# Resources
+#######################
+resources:
+- pod.yaml 
+
+# Generators
+#######################
+configMapGenerator:
+- name: python-script
+  files:
+  - sample_httpd.py

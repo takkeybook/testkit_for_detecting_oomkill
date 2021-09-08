@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-test
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - YOUR_OWN_NODE_NAME
+  containers:
+  - name: app-test
+    image: python:3.8-buster
+    command: [ 'python', '/tmp/sample_httpd.py' ]
+    resources:
+      limits:
+        cpu: 40m
+        memory: 200Mi
+      requests:
+        cpu: 20m
+        memory: 200Mi
+    volumeMounts:
+    - name: python-script
+      mountPath: /tmp
+  volumes:
+  - name: python-script
+    configMap:
+      name: python-script
